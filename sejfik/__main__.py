@@ -57,28 +57,42 @@ class Sejfik:
 
         def get_sejfik_logger(self, show_logs: bool):
             """Handles the creation of logger"""
+            return self
 
         def find_chromedriver(self):
             """Finds chromedriver binaries"""
+            return self
 
         def download_chromedriver(self):
             """Downloads chromedriver binaries"""
+            return self
 
         def set_selenium_session(self, logger):
             """Starts selenium session"""
+            return self
             
         def set_webui_session(self):
             """Starts web interface session on localhost"""
+            return self
+            
 
         def login(self):
             """Login the user either with the username and password"""
+            return self
+            
             
         def get_ptc_links(self):
             """Scrapes pay to click links"""
+            return self
+            
             
         def get_inbox_links(self):
             """Scrapes inbox links"""
+            return self
+            
             
         def get_startpage_link(self):
             """Scrapes and cache starting page link"""
+            return self
+            
             
