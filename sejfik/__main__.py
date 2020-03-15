@@ -34,6 +34,9 @@ class Sejfik:
         self.password = password
         self.page_delay = page_delay
 
+        self.browser = set_selenium_session(chromedriver_headless)
+        
+        
         def set_logger(self, show_logs: bool):
             """Handles the creation of logger."""
 
@@ -46,6 +49,7 @@ class Sejfik:
                     level=logging.DEBUG)
 
             logging.debug('Set up logger.')
+
 
             return self
 
