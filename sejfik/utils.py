@@ -38,8 +38,8 @@ xpaths: dict = {
     },
 
     'ptc': {
-        'anchor_normal': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="box"]/div[@class="box-content-row"]/div[@class="title"]/a[@target="_ptc" and not(img)]',
-        'anchor_alternative': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="box"]/div[@class="box-content-row"]/div[@class="title"]/a[@target="_ptc" and img]',
+        'anchor': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="box"]/div[@class="box-content-row"]/div[@class="title" and not(center)]/a[@target="_ptc" and not(img)]',
+        'anchor_alt': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="box"]/div[@class="box-content-row"]/div[@class="title"]/a[@target="_ptc" and img]',
     },
 
     'inbox': {
