@@ -9,9 +9,9 @@ from sejfik import utils
 
 
 def get_chromedriver() -> str:
-    """Downloads chromedriver binaries if not present, moves to /bin folder.
+    """Downloads chromedriver binary if not present, moves to /bin folder.
 
-    :returns: chromedriver binaries."""
+    :returns: path to chromedriver binary."""
 
     current_path = dirname(realpath(__file__))
     binaries_path = '{}/../bin/'.format(current_path)
@@ -21,7 +21,7 @@ def get_chromedriver() -> str:
 
     try:
         move(sym_path, '{}/../bin'.format(current_path))
-        
+
     except Error:
         pass
 
@@ -33,13 +33,13 @@ def get_chromedriver() -> str:
 
 
 def set_selenium_session(
-        proxy_address,
-        proxy_port,
-        proxy_username,
-        proxy_password,
-        vpn_server,
+        proxy_address: str = None,
+        proxy_port: str = None,
+        proxy_username: str = None,
+        proxy_password: str = None,
+        vpn_server: str = None,
         page_delay: int = 25,
-        chromedriver_headless: bool = True,
+        chromedriver_headless: bool = False,
         chromedriver_arguments: list = []) -> webdriver:
     """Starts selenium session."""
 
