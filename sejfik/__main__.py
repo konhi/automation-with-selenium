@@ -25,7 +25,7 @@ class Sejfik:
         proxy_port: str = None,
         vpn_server: str = None,
         webui_interface: bool = False,
-        chromedriver_headless: bool = True,
+        chromedriver_headless: bool = False,
         chromedriver_arguments: list = None,
         chrome_prefs: dict = None,
     ):
@@ -34,9 +34,9 @@ class Sejfik:
         self.password = password
         self.page_delay = page_delay
 
-        self.browser = set_selenium_session(chromedriver_headless)
-        
-        
+        self.driver = set_selenium_session(
+            proxy_address, proxy_port, proxy_username, proxy_password, vpn_server)
+
         def set_logger(self, show_logs: bool):
             """Handles the creation of logger."""
 
@@ -50,11 +50,6 @@ class Sejfik:
 
             logging.debug('Set up logger.')
 
-
-            return self
-
-        def set_selenium_session(self, logger):
-            """Sets selenium session."""
             return self
 
         def set_webui_session(self):
