@@ -37,52 +37,46 @@ class Sejfik:
         self.driver = set_selenium_session(
             proxy_address, proxy_port, proxy_username, proxy_password, vpn_server)
 
-        def set_logger(self, show_logs: bool):
-            """Handles the creation of logger."""
+    def set_logger(self, show_logs: bool):
+        """Handles the creation of logger."""
 
-            if show_logs:
-                logging.basicConfig(
-                    filename=logs_path,
-                    filemode='a',
-                    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-                    datefmt='%H:%M:%S',
-                    level=logging.DEBUG)
+        if show_logs:
+            logging.basicConfig(
+                filename=logs_path,
+                filemode='a',
+                format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                datefmt='%H:%M:%S',
+                level=logging.DEBUG)
 
-            logging.debug('Set up logger.')
+        logging.debug('Set up logger.')
 
-            return self
+        return self
 
-        def set_webui_session(self):
-            """Sets web interface session on localhost."""
+    def login(self):
+        """Login the user either with the username and password."""
+        driver.get(urls['login'])
 
-            logging.debug('WebUI session has been started.')
+        logging.debug('Logged in.')
 
-            return self
+        return self
 
-        def login(self):
-            """Login the user either with the username and password."""
+    def get_ptc_links(self):
+        """Scrapes pay to click links."""
 
-            logging.debug('Logged in.')
+        logging.debug('Scrapped pay to click links.')
 
-            return self
+        return self
 
-        def get_ptc_links(self):
-            """Scrapes pay to click links."""
+    def get_inbox_links(self):
+        """Scrapes inbox links."""
 
-            logging.debug('Scrapped pay to click links.')
+        logging.debug('Scrapped inbox links.')
 
-            return self
+        return self
 
-        def get_inbox_links(self):
-            """Scrapes inbox links."""
+    def get_startpage_link(self):
+        """Scrapes and cache starting page link."""
 
-            logging.debug('Scrapped inbox links.')
+        logging.debug('Scrapped start page link.')
 
-            return self
-
-        def get_startpage_link(self):
-            """Scrapes and cache starting page link."""
-
-            logging.debug('Scrapped start page link.')
-
-            return self
+        return self
