@@ -34,10 +34,6 @@ def get_chromedriver() -> str:
 
 def set_selenium_session(
         proxy_address: str = None,
-        proxy_port: str = None,
-        proxy_username: str = None,
-        proxy_password: str = None,
-        vpn_server: str = None,
         page_delay: int = 25,
         chromedriver_headless: bool = False,
         chromedriver_arguments: list = []) -> webdriver:
