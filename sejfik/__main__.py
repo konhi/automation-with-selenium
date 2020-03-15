@@ -33,16 +33,16 @@ class Sejfik:
         self.username = username
         self.password = password
         self.page_delay = page_delay
+        self.proxy_adress = proxy_address
 
-        self.driver = set_selenium_session(
-            proxy_address, proxy_port, proxy_username, proxy_password, vpn_server)
+        self.driver = set_selenium_session()
 
     def set_logger(self, show_logs: bool):
         """Handles the creation of logger."""
 
         if show_logs:
             logging.basicConfig(
-                filename=logs_path,
+                filename=self.logs_path,
                 filemode='a',
                 format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                 datefmt='%H:%M:%S',
@@ -50,33 +50,34 @@ class Sejfik:
 
         logging.debug('Set up logger.')
 
-        return self
-
-    def login(self):
+    def login(self) -> None:
         """Login the user either with the username and password."""
-        driver.get(urls['login'])
+
+        self.driver.get(urls['login'])
+
+        self.driver.find_element_by_xpath(
+            xpaths['login']['username_input']).send_keys(self.username)
+
+        self.driver.find_element_by_xpath(
+            xpaths['login']['password_input']).send_keys(self.password)
+
+        self.driver.find_element_by_xpath(
+            xpaths['login']['login_button']).click()
 
         logging.debug('Logged in.')
 
-        return self
 
     def get_ptc_links(self):
         """Scrapes pay to click links."""
 
         logging.debug('Scrapped pay to click links.')
 
-        return self
-
     def get_inbox_links(self):
         """Scrapes inbox links."""
 
         logging.debug('Scrapped inbox links.')
 
-        return self
-
     def get_startpage_link(self):
         """Scrapes and cache starting page link."""
 
         logging.debug('Scrapped start page link.')
-
-        return self
