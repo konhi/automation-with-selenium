@@ -8,11 +8,9 @@ from sejfik import utils
 
 
 def get_chromedriver() -> None:
-    """
-    Downloads chromedriver binaries if not present, moves to /bin folder.
-    """
+    """Downloads chromedriver binaries if not present, moves to /bin folder."""
 
-    cdd = ChromeDriverDownloader()        
+    cdd = ChromeDriverDownloader()
     sym_path: str = cdd.download_and_install()[1]
 
     move(sym_path, '{}/../bin'.format(dirname(realpath(__file__))))
@@ -27,11 +25,7 @@ def set_selenium_session(
         page_delay: int = 25,
         chromedriver_headless: bool = True,
         chromedriver_arguments: list = []) -> webdriver:
-    """
-    Starts session for a selenium server.
-
-    :returns: WebDriver as driver object.
-    """
+    """Starts selenium session."""
 
     chromedriver_arguments.extend(utils.driver_settings)
 
