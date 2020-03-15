@@ -1,7 +1,9 @@
 import logging
 import os
+from collections import deque
 
 import selenium
+from selenium.webdriver.remote.webelement import WebElement
 
 from .browser import get_chromedriver, set_selenium_session
 from .utils import (anticheat_word, driver_settings, driver_settings_headless,
@@ -66,11 +68,25 @@ class Sejfik:
 
         logging.debug('Logged in.')
 
+    def get_ptc_links(self) -> map:
+        """
+        Scrapes pay to click links.
 
-    def get_ptc_links(self):
-        """Scrapes pay to click links."""
+        :returns: iterator of full links.
+        """
+
+        def get_href(x: WebElement) -> str:
+            return x.get_attribute('href')
+
+        self.driver.get(urls['ptc'])
 
         logging.debug('Scrapped pay to click links.')
+
+        anchors = self.driver.find_elements_by_xpath(
+            xpaths['ptc']['anchor_alt']) + self.driver.find_elements_by_xpath(
+            xpaths['ptc']['anchor'])
+
+        return map(get_href, anchors)
 
     def get_inbox_links(self):
         """Scrapes inbox links."""
