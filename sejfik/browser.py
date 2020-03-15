@@ -1,5 +1,6 @@
 from os.path import dirname, realpath
 from shutil import move
+from platform import system
 
 from selenium import webdriver
 from webdriverdownloader import ChromeDriverDownloader
@@ -7,13 +8,24 @@ from webdriverdownloader import ChromeDriverDownloader
 from sejfik import utils
 
 
-def get_chromedriver() -> None:
-    """Downloads chromedriver binaries if not present, moves to /bin folder."""
+def get_chromedriver() -> str:
+    """Downloads chromedriver binaries if not present, moves to /bin folder.
+
+    :returns: chromedriver binaries."""
+
+    current_path = dirname(realpath(__file__))
+    binaries_path = '{}/../bin/'.format(current_path)
 
     cdd = ChromeDriverDownloader()
     sym_path: str = cdd.download_and_install()[1]
 
-    move(sym_path, '{}/../bin'.format(dirname(realpath(__file__))))
+    move(sym_path, '{}/../bin'.format(current_path))
+
+    if system == 'win32':
+        return '{}/chromedriver.exe'.format(binaries_path)
+
+    else:
+        return '{}/chromedriver'.format(binaries_path)
 
 
 def set_selenium_session(
