@@ -27,6 +27,12 @@ urls: dict = {
 }
 
 xpaths: dict = {
+    'login': {
+        'username_input': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="username"]',
+        'password_input': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="password"]',
+        'login_button': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="submit"]'
+    },
+    
     'enter': {
         'username': 'html/body/div[@class="green-box"]/div[@class="container-top"]/div[@class="user"]/a[@href="https://sejfik.com/pages/profil.php"]/span'
     },
