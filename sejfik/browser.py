@@ -1,5 +1,5 @@
 from os.path import dirname, realpath
-from shutil import move
+from shutil import move, Error
 from platform import system
 
 from selenium import webdriver
@@ -19,7 +19,11 @@ def get_chromedriver() -> str:
     cdd = ChromeDriverDownloader()
     sym_path: str = cdd.download_and_install()[1]
 
-    move(sym_path, '{}/../bin'.format(current_path))
+    try:
+        move(sym_path, '{}/../bin'.format(current_path))
+        
+    except Error:
+        pass
 
     if system == 'win32':
         return '{}/chromedriver.exe'.format(binaries_path)
