@@ -1,11 +1,11 @@
 import logging
 from collections import deque
-from typing import List, Tuple, Dict, Deque
+from typing import Deque, Dict, List, Tuple
 
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
 from .browser import set_selenium_session  # type: ignore
-from .utils import verify_and_get_href, urls, xpaths, prefs  # type: ignore
+from .utils import prefs, urls, verify_and_get_href, xpaths  # type: ignore
 
 
 class Sejfik:
@@ -77,11 +77,9 @@ class Sejfik:
 
         isscrapped = False
         i = 0
-        links = deque()
+        links: Deque[str] = deque()
 
         while not isscrapped:
-            current_anchors = ()
-
             self.driver.get(urls['ptc'] + str(i * 15))
 
             current_anchors: Tuple[List[WebElement], ...] = (
