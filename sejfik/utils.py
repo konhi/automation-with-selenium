@@ -1,6 +1,7 @@
 from selenium.webdriver.remote.webelement import WebElement
+from typing import Dict, Tuple
 
-driver_settings: tuple = (
+driver_settings: Tuple[str, ...] = (
     '--profile-directory=Default',
     '--disable-plugins-discovery',
     '--start-maximized',
@@ -9,18 +10,18 @@ driver_settings: tuple = (
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.137 Safari/537.36'
 )
 
-driver_settings_headless: tuple = (
+driver_settings_headless: Tuple[str, ...] = (
     '--headless',
     '--disable-gpu'
 )
 
-prefs: dict = {
+prefs: Dict[str, Dict[str, int]] = {
     'profile.default_content_setting_values': {
         'images': 2
     }
 }
 
-urls: dict = {
+urls: Dict[str, str] = {
     'login': 'https://sejfik.com/pages/enter.php',
     'ptc': 'https://sejfik.com/pages/ptcontest.php?startpos=',
     'ptc_paid': 'https://sejfik.com/pages/ptc.php?startpos=',
@@ -28,7 +29,7 @@ urls: dict = {
     'starting_page': 'https://sejfik.com/pages/startowa.php'
 }
 
-xpaths: dict = {
+xpaths: Dict[str, Dict[str, str]] = {
     'login': {
         'username_input': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="username"]',
         'password_input': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="password"]',
