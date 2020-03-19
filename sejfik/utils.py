@@ -8,7 +8,8 @@ driver_settings: Tuple[str, ...] = (
     '--start-maximized',
     #  '--log-level=3',
     '--start-incognito',
-    'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.137 Safari/537.36'
+    'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
+        AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.137 Safari/537.36'
 )
 
 driver_settings_headless: Tuple[str, ...] = (
@@ -32,22 +33,29 @@ urls: Dict[str, str] = {
 
 xpaths: Dict[str, Dict[str, str]] = {
     'login': {
-        'username_input': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="username"]',
-        'password_input': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="password"]',
-        'login_button': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="submit"]'
+        'username_input': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table\
+            /tbody/tr/td/input[@name="username"]',
+        'password_input': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table\
+            /tbody/tr/td/input[@name="password"]',
+        'login_button': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody\
+            /tr/td/input[@name="submit"]'
     },
 
     'enter': {
-        'username': 'html/body/div[@class="green-box"]/div[@class="container-top"]/div[@class="user"]/a[@href="https://sejfik.com/pages/profil.php"]/span'
+        'username': 'html/body/div[@class="green-box"]/div[@class="container-top"]/div[@class="user"]\
+            /a[@href="https://sejfik.com/pages/profil.php"]/span'
     },
 
     'ptc': {
-        'anchor': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="box"]/div[@class="box-content-row"]/div[@class="title" and not(center)]/a[@target="_ptc" and not(img)]',
-        'anchor_alt': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="box"]/div[@class="box-content-row"]/div[@class="title"]/a[@target="_ptc" and img]',
+        'anchor': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="box"]\
+            /div[@class="box-content-row"]/div[@class="title" and not(center)]/a[@target="_ptc" and not(img)]',
+        'anchor_alt': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="box"]\
+            /div[@class="box-content-row"]/div[@class="title"]/a[@target="_ptc" and img]',
     },
 
     'inbox': {
-        'anchor': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="content-width"]/div[@class="inbox_table"]/form[@id="inbox"]/table/tbody/tr/td[@class="subject_mail"]/a[@target="inbox"]'
+        'anchor': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="content-width"]\
+            /div[@class="inbox_table"]/form[@id="inbox"]/table/tbody/tr/td[@class="subject_mail"]/a[@target="inbox"]'
     },
 
     'starting_page': {
