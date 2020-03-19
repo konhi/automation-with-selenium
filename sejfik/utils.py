@@ -1,3 +1,5 @@
+from selenium.webdriver.remote.webelement import WebElement
+
 driver_settings: tuple = (
     '--profile-directory=Default',
     '--disable-plugins-discovery',
@@ -32,7 +34,7 @@ xpaths: dict = {
         'password_input': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="password"]',
         'login_button': 'html/body/div[@class="container"]/div[@class="content"]/form[@class="form-login"]/table/tbody/tr/td/input[@name="submit"]'
     },
-    
+
     'enter': {
         'username': 'html/body/div[@class="green-box"]/div[@class="container-top"]/div[@class="user"]/a[@href="https://sejfik.com/pages/profil.php"]/span'
     },
@@ -52,3 +54,9 @@ xpaths: dict = {
 }
 
 anticheat_word: str = "Reklama sprawdzająca - uwaga!"
+
+
+def get_href(element: WebElement) -> str:
+    """Returns href from WebElement"""
+
+    return element.get_attribute('href')
