@@ -1,13 +1,10 @@
 import logging
-import os
-from collections import deque
+from typing import Iterator, List, Tuple, Dict
 
-import selenium
-from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
-from .browser import get_chromedriver, set_selenium_session
-from .utils import (anticheat_word, driver_settings, driver_settings_headless,
-                    prefs, urls, xpaths)
+from .browser import set_selenium_session  # type: ignore
+from .utils import get_href, urls, xpaths, prefs  # type: ignore
 
 
 class Sejfik:
@@ -15,31 +12,33 @@ class Sejfik:
 
     def __init__(
         self,
-        username: str = None,
-        password: str = None,
+        username: str = '',
+        password: str = '',
         page_delay: int = 25,
         show_logs: bool = True,
-        save_logs: bool = None,
-        logs_path: str = None,
-        proxy_username: str = None,
-        proxy_password: str = None,
-        proxy_address: str = None,
-        proxy_port: str = None,
-        vpn_server: str = None,
+        save_logs: bool = False,
+        logs_path: str = '',
+        proxy_username: str = '',
+        proxy_password: str = '',
+        proxy_address: str = '',
+        proxy_port: str = '',
+        vpn_server: str = '',
         webui_interface: bool = False,
         chromedriver_headless: bool = False,
-        chromedriver_arguments: list = None,
-        chrome_prefs: dict = None,
-    ):
+        chromedriver_arguments: List[str] = [],
+        chrome_prefs: Dict[str, Dict[str, int]] = prefs,
+    ) -> None:
 
         self.username = username
         self.password = password
         self.page_delay = page_delay
+        self.show_logs = show_logs
+        self.logs_path = logs_path
         self.proxy_adress = proxy_address
-
+        self.logs_path = logs_path
         self.driver = set_selenium_session()
 
-    def set_logger(self, show_logs: bool):
+    def set_logger(self, show_logs: bool) -> None:
         """Handles the creation of logger."""
 
         if show_logs:
@@ -68,32 +67,34 @@ class Sejfik:
 
         logging.debug('Logged in.')
 
-    def get_ptc_links(self) -> map:
+    def get_ptc_links(self) -> Iterator[str]:
         """
         Scrapes pay to click links.
 
-        :returns: iterator of full links.
+        :returns: iterator of links.
         """
 
-        def get_href(x: WebElement) -> str:
-            return x.get_attribute('href')
+        anchors: List[WebElement] = []
+        isscrapped: bool = False
 
-        self.driver.get(urls['ptc'])
+        while not isscrapped:
+            i: int = 0
+
+            self.driver.get(urls['ptc'] + str(i * 15))
+
+            current_anchors: Tuple[List[WebElement], ...] = (
+                self.driver.find_elements_by_xpath(
+                    xpaths['ptc']['anchor_alt']),
+                self.driver.find_elements_by_xpath(xpaths['ptc']['anchor'])
+            )
+
+            if not len(current_anchors[0]) and not len(current_anchors[1]):
+                anchors.extend(current_anchors[0] + current_anchors[1])
+                i += 1
+
+            else:
+                isscrapped = True
 
         logging.debug('Scrapped pay to click links.')
 
-        anchors = self.driver.find_elements_by_xpath(
-            xpaths['ptc']['anchor_alt']) + self.driver.find_elements_by_xpath(
-            xpaths['ptc']['anchor'])
-
         return map(get_href, anchors)
-
-    def get_inbox_links(self):
-        """Scrapes inbox links."""
-
-        logging.debug('Scrapped inbox links.')
-
-    def get_startpage_link(self):
-        """Scrapes and cache starting page link."""
-
-        logging.debug('Scrapped start page link.')
