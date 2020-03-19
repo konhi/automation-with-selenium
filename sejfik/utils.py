@@ -17,10 +17,11 @@ driver_settings_headless: Tuple[str, ...] = (
     '--disable-gpu'
 )
 
-prefs: Dict[str, Dict[str, int]] = {
+prefs: Dict[str, Any] = {
     'profile.default_content_setting_values': {
         'images': 2
-    }
+    },
+    'intl.accept_languages': 'pl-PL'
 }
 
 urls: Dict[str, str] = {
@@ -63,10 +64,28 @@ xpaths: Dict[str, Dict[str, str]] = {
     }
 }
 
-anticheat_word: str = "Reklama sprawdzająca - uwaga!"
+anticheat_words = [
+    'sprawdza',
+    'uwaga',
+    'weryfik',
+    'zatwier',
+    'potwier',
+]
 
 
 def get_href(element: WebElement) -> Any:
     """Returns href from WebElement or None if there's no href"""
+
+    return element.get_attribute('href')
+
+
+def verify_and_get_href(element: WebElement) -> Any:
+    """Returns href from WebElement if it not contains anti-cheat words."""
+
+    text = element.text
+
+    for w in anticheat_words:
+        if w in text:
+            return
 
     return element.get_attribute('href')
