@@ -12,8 +12,8 @@ class Sejfik:
 
     def __init__(
         self,
-        username: str = '',
-        password: str = '',
+        username: str,
+        password: str,
         page_delay: int = 25,
         show_logs: bool = True,
         save_logs: bool = False,
@@ -23,7 +23,6 @@ class Sejfik:
         proxy_address: str = '',
         proxy_port: str = '',
         vpn_server: str = '',
-        webui_interface: bool = False,
         chromedriver_headless: bool = False,
         chromedriver_arguments: List[str] = [],
         chrome_prefs: Dict[str, Dict[str, int]] = prefs,

@@ -34,13 +34,10 @@ def get_chromedriver() -> str:
 
 
 def set_selenium_session(
-        proxy_address: str,
-        page_delay: int = 25,
+        proxy_address: str = '',
         chromedriver_headless: bool = False,
-        chromedriver_arguments: List[str] = []) -> webdriver:
+        chromedriver_arguments: List[str] = driver_settings) -> webdriver:
     """Starts selenium session."""
-
-    chromedriver_arguments.extend(driver_settings)
 
     if chromedriver_headless:
         chromedriver_arguments.extend(driver_settings_headless)
