@@ -1,11 +1,12 @@
 from os.path import dirname, realpath
-from shutil import move, Error
 from platform import system
+from shutil import Error, move
+from typing import List
 
-from selenium import webdriver
-from webdriverdownloader import ChromeDriverDownloader
+from selenium import webdriver  # type: ignore
+from webdriverdownloader import ChromeDriverDownloader  # type: ignore
 
-from sejfik import utils
+from .utils import driver_settings, driver_settings_headless, prefs  # type: ignore
 
 
 def get_chromedriver() -> str:
@@ -25,7 +26,7 @@ def get_chromedriver() -> str:
     except Error:
         pass
 
-    if system == 'win32':
+    if system() == 'Windows':
         return '{}/chromedriver.exe'.format(binaries_path)
 
     else:
@@ -33,19 +34,19 @@ def get_chromedriver() -> str:
 
 
 def set_selenium_session(
-        proxy_address: str = None,
+        proxy_address: str,
         page_delay: int = 25,
         chromedriver_headless: bool = False,
-        chromedriver_arguments: list = []) -> webdriver:
+        chromedriver_arguments: List[str] = []) -> webdriver:
     """Starts selenium session."""
 
-    chromedriver_arguments.extend(utils.driver_settings)
+    chromedriver_arguments.extend(driver_settings)
 
     if chromedriver_headless:
-        chromedriver_arguments.extend(utils.driver_settings_headless)
+        chromedriver_arguments.extend(driver_settings_headless)
 
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option('prefs', utils.prefs)
+    chrome_options.add_experimental_option('prefs', prefs)
 
     for arg in chromedriver_arguments:
         chrome_options.add_argument(arg)
