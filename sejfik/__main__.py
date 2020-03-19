@@ -1,10 +1,11 @@
 import logging
-from typing import Iterator, List, Tuple, Dict
+from collections import deque
+from typing import List, Tuple, Dict, Deque
 
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
 from .browser import set_selenium_session  # type: ignore
-from .utils import get_href, urls, xpaths, prefs  # type: ignore
+from .utils import verify_and_get_href, urls, xpaths, prefs  # type: ignore
 
 
 class Sejfik:
@@ -67,18 +68,19 @@ class Sejfik:
 
         logging.debug('Logged in.')
 
-    def get_ptc_links(self) -> Iterator[str]:
+    def get_ptc_links(self) -> Deque[str]:
         """
         Scrapes pay to click links.
 
-        :returns: iterator of links.
+        :returns: List deque of links.
         """
 
-        anchors: List[WebElement] = []
-        isscrapped: bool = False
+        isscrapped = False
+        i = 0
+        links = deque()
 
         while not isscrapped:
-            i: int = 0
+            current_anchors = ()
 
             self.driver.get(urls['ptc'] + str(i * 15))
 
@@ -88,13 +90,13 @@ class Sejfik:
                 self.driver.find_elements_by_xpath(xpaths['ptc']['anchor'])
             )
 
-            if not len(current_anchors[0]) and not len(current_anchors[1]):
-                anchors.extend(current_anchors[0] + current_anchors[1])
-                i += 1
-
-            else:
+            if len(current_anchors[0]) == 0 and len(current_anchors[1]) == 0:
                 isscrapped = True
 
-        logging.debug('Scrapped pay to click links.')
+            else:
+                for el in current_anchors[0] + current_anchors[1]:
+                    links.append(verify_and_get_href(el))
 
-        return map(get_href, anchors)
+                i += 1
+
+        return links
