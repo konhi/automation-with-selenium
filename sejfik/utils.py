@@ -1,5 +1,6 @@
-from selenium.webdriver.remote.webelement import WebElement
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Any
+
+from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
 driver_settings: Tuple[str, ...] = (
     '--profile-directory=Default',
@@ -57,7 +58,7 @@ xpaths: Dict[str, Dict[str, str]] = {
 anticheat_word: str = "Reklama sprawdzająca - uwaga!"
 
 
-def get_href(element: WebElement) -> str:
-    """Returns href from WebElement"""
+def get_href(element: WebElement) -> Any:
+    """Returns href from WebElement or None if there's no href"""
 
     return element.get_attribute('href')
