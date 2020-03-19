@@ -1,8 +1,8 @@
-from typing import Dict, Tuple, Any
+from typing import Dict, Tuple, Any, List
 
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
-driver_settings: Tuple[str, ...] = (
+driver_settings: List[str] = [
     '--profile-directory=Default',
     '--disable-plugins-discovery',
     '--start-maximized',
@@ -10,7 +10,7 @@ driver_settings: Tuple[str, ...] = (
     '--start-incognito',
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.137 Safari/537.36'
-)
+]
 
 driver_settings_headless: Tuple[str, ...] = (
     '--headless',
