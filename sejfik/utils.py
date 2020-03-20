@@ -6,7 +6,7 @@ driver_settings: List[str] = [
     '--profile-directory=Default',
     '--disable-plugins-discovery',
     '--start-maximized',
-    #  '--log-level=3',
+    '--log-level=3',
     '--start-incognito',
     'user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.137 Safari/537.36'
