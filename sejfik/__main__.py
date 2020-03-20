@@ -16,7 +16,7 @@ class Sejfik:
         username: str,
         password: str,
         *,
-        page_delay: int = 25,
+        timer: int = 35,
         show_logs: bool = True,
         save_logs: bool = False,
         logs_path: str = '',
