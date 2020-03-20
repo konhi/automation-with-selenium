@@ -55,8 +55,8 @@ xpaths: Dict[str, Dict[str, str]] = {
     },
 
     'inbox': {
-        'anchor': 'html/body/div[@class="container"]/div[@class="content"]/div[@class="content-width"]\
-            /div[@class="inbox_table"]/form[@id="inbox"]/table/tbody/tr/td[@class="subject_mail"]/a[@target="inbox"]'
+        'anchor': 'html/body/div[@class="container"]/div/div[@class="content-width referers"]/div[@class="inbox_table"]\
+            /form/table/tbody/tr[2]/td[2]/a'
     },
 
     'starting_page': {

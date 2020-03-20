@@ -5,7 +5,7 @@ from typing import Deque, Dict, List, Tuple
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
 from .browser import set_selenium_session  # type: ignore
-from .utils import prefs, urls, verify_and_get_href, xpaths  # type: ignore
+from .utils import prefs, urls, get_href, verify_and_get_href, xpaths  # type: ignore
 
 
 class Sejfik:
@@ -72,7 +72,7 @@ class Sejfik:
         """
         Scrapes pay to click links.
 
-        :returns: List deque of links.
+        :returns: Deque of links.
         """
 
         isscrapped = False
@@ -98,3 +98,20 @@ class Sejfik:
                 i += 1
 
         return links
+
+    def get_inbox_links(self) -> Deque[str]:
+        """
+        Scrapes newest inbox links.
+
+        :returns: Deque of links.
+        """
+
+        self.driver.get(urls['inbox'])
+
+        mail_link = get_href(
+            self.driver.find_element_by_xpath(xpaths['inbox']['anchor']))
+
+        self.driver.get(mail_link)
+
+        return deque([get_href(x) for x in self.driver.find_elements_by_partial_link_text(
+            'http://sejfik.com/scripts/runner.php?EA=')])
