@@ -39,9 +39,6 @@ class Sejfik:
         self.logs_path = logs_path
         self.driver = set_selenium_session()
 
-    def set_logger(self, show_logs: bool) -> None:
-        """Handles the creation of logger."""
-
         if show_logs:
             logging.basicConfig(
                 filename=self.logs_path,
@@ -49,8 +46,6 @@ class Sejfik:
                 format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
                 datefmt='%H:%M:%S',
                 level=logging.DEBUG)
-
-        logging.debug('Set up logger.')
 
     def login(self) -> None:
         """Login the user either with the username and password."""
