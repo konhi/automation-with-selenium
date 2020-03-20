@@ -32,12 +32,12 @@ class Sejfik:
 
         self.username = username
         self.password = password
-        self.page_delay = page_delay
+        self.timer = timer
         self.show_logs = show_logs
         self.logs_path = logs_path
         self.proxy_adress = proxy_address
         self.logs_path = logs_path
-        self.driver = set_selenium_session()
+        self.driver = set_selenium_session(chromedriver_headless=chromedriver_headless)
 
         if show_logs:
             logging.basicConfig(
@@ -110,3 +110,9 @@ class Sejfik:
 
         return deque([get_href(x) for x in self.driver.find_elements_by_partial_link_text(
             'http://sejfik.com/scripts/runner.php?EA=')])
+
+    def open_links(self, links: Deque[str]) -> None:
+        """Opens links."""
+
+        for l in links:
+            self.driver.execute_script('window.open(arguments[0]);', l)
