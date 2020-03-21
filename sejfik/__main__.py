@@ -1,41 +1,54 @@
+"""Tool for automated sejfik tasks.
+
+Uses Python 3.8 and mainly Selenium library to control Chrome browser.
+Contains:
+    login(): Logs in user to sejfik webpage.
+
+    get_ptc_links(): Scrapes Pay To Click links.
+
+    get_inbox_links(): Scrapes Inbox links.
+
+    open_links(links): Open every link of the list.
+
+    close_browser(timer): Closes browser after given time.
+
+Typical usage example:
+
+    bot = Sejfik('username', 'password', chromedriver_headless=True)
+    ptc_links = bot.get_ptc_links()
+"""
+
+
 import logging
 from collections import deque
-from typing import Deque, Dict, List, Tuple
+from time import sleep
+from typing import Deque, List, Tuple
 
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
 
 from .browser import set_selenium_session  # type: ignore
-from .utils import prefs, urls, get_href, verify_and_get_href, xpaths  # type: ignore
+from .utils import urls, get_href, verify_and_get_href, xpaths  # type: ignore
 
 
 class Sejfik:
     """Class to be instantiated to use the script."""
 
     def __init__(
-        self,
-        username: str,
-        password: str,
-        *,
-        timer: int = 35,
-        show_logs: bool = True,
-        save_logs: bool = False,
-        logs_path: str = '',
-        proxy_username: str = '',
-        proxy_password: str = '',
-        proxy_address: str = '',
-        proxy_port: str = '',
-        vpn_server: str = '',
-        chromedriver_headless: bool = False,
-        chromedriver_arguments: List[str] = [],
-        chrome_prefs: Dict[str, Dict[str, int]] = prefs,
+                self,
+                username: str,
+                password: str,
+                *,
+                timer: int = 35,
+                show_logs: bool = True,
+                #  save_logs: bool = False,
+                logs_path: str = '',
+                chromedriver_headless: bool = False,
     ) -> None:
 
         self.username = username
         self.password = password
         self.timer = timer
         self.show_logs = show_logs
-        self.logs_path = logs_path
-        self.proxy_adress = proxy_address
         self.logs_path = logs_path
         self.driver = set_selenium_session(
             chromedriver_headless=chromedriver_headless)
@@ -102,12 +115,13 @@ class Sejfik:
                 self.driver.find_elements_by_xpath(xpaths['ptc']['anchor'])
             )
 
-            if len(current_anchors[0]) == 0 and len(current_anchors[1]) == 0:
+            if not current_anchors[0] and not current_anchors[1] == 0:
                 isscrapped = True
 
             else:
-                for el in current_anchors[0] + current_anchors[1]:
-                    links.append(verify_and_get_href(el))
+                for web_el in current_anchors[0] + current_anchors[1]:
+                    if web_el:
+                        links.append(verify_and_get_href(web_el))
 
                 i += 1
 
@@ -143,8 +157,20 @@ class Sejfik:
             links (Deque[str])
         """
 
-        for l in links:
-            self.driver.execute_script('window.open(arguments[0]);', l)
+        for link in links:
+            self.driver.execute_script('window.open(arguments[0]);', link)
             logging.info('Oppened link.')
 
-        logging.info("Oppened {} links. That's a lot!".format(len(links)))
+        logging.info("Oppened %s links. That's a lot!", len(links))
+
+    def close_browser(self, timer: int = 60) -> None:
+        """Closes browser.
+
+        Args:
+            timer (int): time to wait before closing browser.
+        """
+
+        sleep(timer)
+        logging.info('Closing browser after %s seconds', timer)
+        self.driver.quit()
+        logging.info('Closed browser.')

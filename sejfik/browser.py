@@ -1,7 +1,16 @@
+"""Contains functions needed to start webdriver.
+
+Contains:
+    get_chromedriver(): Making sure there will be chromedriver binary to run.
+    set_selenium_session(): Starts selenium session.
+
+Typical usage example:
+    driver = set_selenium_session(chromedriver_headless=True)
+"""
+
 from os.path import dirname, realpath
 from platform import system
 from shutil import Error, move
-from typing import List
 
 from selenium import webdriver  # type: ignore
 from webdriverdownloader import ChromeDriverDownloader  # type: ignore
@@ -10,9 +19,11 @@ from .utils import driver_settings, driver_settings_headless, prefs  # type: ign
 
 
 def get_chromedriver() -> str:
-    """Downloads chromedriver binary if not present, moves to /bin folder.
+    """Downloads chromedriver binary and moves to /bin folder if not present.
 
-    :returns: path to chromedriver binary."""
+    Returns:
+        str: path to chromedriver binary file.
+    """
 
     current_path = dirname(realpath(__file__))
     binaries_path = '{}/../bin/'.format(current_path)
@@ -29,28 +40,26 @@ def get_chromedriver() -> str:
     if system() == 'Windows':
         return '{}/chromedriver.exe'.format(binaries_path)
 
-    else:
-        return '{}/chromedriver'.format(binaries_path)
+    return '{}/chromedriver'.format(binaries_path)
 
 
 def set_selenium_session(
-        proxy_address: str = '',
-        chromedriver_headless: bool = False,
-        chromedriver_arguments: List[str] = driver_settings) -> webdriver:
-    """
-    Starts selenium session.
+        chromedriver_headless: bool = False) -> webdriver:
+    """Starts selenium session with proper options.
 
-    :returns: WebDriver.
+    Returns:
+        WebDriver: driver object.
     """
-
-    if chromedriver_headless:
-        chromedriver_arguments.extend(driver_settings_headless)
 
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_experimental_option('prefs', prefs)
 
-    for arg in chromedriver_arguments:
+    for arg in driver_settings:
         chrome_options.add_argument(arg)
+
+    if chromedriver_headless:
+        for arg in driver_settings_headless:
+            chrome_options.add_argument(arg)
 
     driver = webdriver.Chrome(get_chromedriver(), options=chrome_options)
 
