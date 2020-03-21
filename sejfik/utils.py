@@ -75,13 +75,27 @@ anticheat_words = [
 
 
 def get_href(element: WebElement) -> Any:
-    """Returns href from WebElement or None if there's no href"""
+    """Gets href attribute.
+
+    Args:
+        element (WebElement)
+
+    Returns:
+        Any: href (str) or None if no href attribute.
+    """
 
     return element.get_attribute('href')
 
 
 def verify_and_get_href(element: WebElement) -> Any:
-    """Returns href from WebElement if it not contains anti-cheat words."""
+    """Verifies and gets href attribute.
+
+    Args:
+        element (WebElement)
+
+    Returns:
+        Any: href (str) or None if no href attribute or contains anti-cheat word.
+    """
 
     text = element.text
 
