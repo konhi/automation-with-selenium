@@ -82,10 +82,10 @@ class Sejfik:
         logging.debug('Logged in.')
 
     def get_ptc_links(self) -> Deque[str]:
-        """
-        Scrapes pay to click links.
+        """Get pay to click links.
 
-        :returns: Deque of links.
+        Returns:
+            Deque[str]: raw hrefs
         """
 
         isscrapped = False
@@ -137,7 +137,11 @@ class Sejfik:
             'http://sejfik.com/scripts/runner.php?EA=')])
 
     def open_links(self, links: Deque[str]) -> None:
-        """Opens links."""
+        """Open links.
+
+        Args:
+            links (Deque[str])
+        """
 
         for l in links:
             self.driver.execute_script('window.open(arguments[0]);', l)
