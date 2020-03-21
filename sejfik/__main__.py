@@ -141,5 +141,6 @@ class Sejfik:
 
         for l in links:
             self.driver.execute_script('window.open(arguments[0]);', l)
+            logging.info('Oppened link.')
 
         logging.info("Oppened {} links. That's a lot!".format(len(links)))
