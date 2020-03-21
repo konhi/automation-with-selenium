@@ -21,7 +21,8 @@ prefs: Dict[str, Any] = {
     'profile.default_content_setting_values': {
         'images': 2
     },
-    'intl.accept_languages': 'pl-PL'
+    'intl.accept_languages': 'pl-PL',
+    'profile.managed_default_content_settings.javascript': 2,
 }
 
 urls: Dict[str, str] = {
