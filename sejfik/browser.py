@@ -13,11 +13,12 @@ Typical usage example:
 from os.path import dirname, realpath
 from platform import system
 from shutil import Error, move
+from time import sleep
 
 from selenium import webdriver  # type: ignore
 from webdriverdownloader import ChromeDriverDownloader  # type: ignore
 
-from .utils import driver_settings, driver_settings_headless, prefs  # type: ignore
+from .utils import driver_settings, driver_settings_headless, prefs, urls, xpaths  # type: ignore
 
 
 def get_chromedriver() -> str:
@@ -47,15 +48,19 @@ def get_chromedriver() -> str:
 
 
 def set_selenium_session(chromedriver_headless: bool = False) -> webdriver:
-    """Starts selenium session with proper options.
+    """Starts selenium session with proper options and extension settings.
 
     Returns:
 
         WebDriver: driver object.
     """
 
+    current_path = dirname(realpath(__file__))
+
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_experimental_option("prefs", prefs)
+    chrome_options.add_extension(
+        current_path + '/../bin/extension_1_24_4_0.crx')
 
     for arg in driver_settings:
         chrome_options.add_argument(arg)
@@ -65,5 +70,17 @@ def set_selenium_session(chromedriver_headless: bool = False) -> webdriver:
             chrome_options.add_argument(arg)
 
     driver = webdriver.Chrome(get_chromedriver(), options=chrome_options)
+
+    driver.get(urls['ublock_settings'])
+
+    # Using sleep to fix some javascript input's issues.
+
+    input_line = driver.switch_to.active_element
+    sleep(2)
+
+    input_line.send_keys('##iframe')
+    sleep(2)
+
+    driver.find_element_by_xpath(xpaths['ublock_settings']['save_button']).click()
 
     return driver

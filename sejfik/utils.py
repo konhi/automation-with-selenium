@@ -32,7 +32,6 @@ driver_settings: Tuple[str, ...] = (
     "--disable-plugins-discovery",
     "--start-maximized",
     "--log-level=3",
-    "--start-incognito",
     "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.137 Safari/537.36",
 )
@@ -51,6 +50,7 @@ urls: Dict[str, str] = {
     "ptc_paid": "https://sejfik.com/pages/ptc.php?startpos=",
     "inbox": "https://sejfik.com/pages/inbox.php",
     "starting_page": "https://sejfik.com/pages/startowa.php",
+    "ublock_settings": "chrome-extension://cjpalhdlnbpafiamejdnhcphjbkeiagm/1p-filters.html",
 }
 
 xpaths: Dict[str, Dict[str, str]] = {
@@ -79,6 +79,9 @@ xpaths: Dict[str, Dict[str, str]] = {
     },
     "starting_page": {
         "user_starting_page": 'html/body/div[@class="container"]/div[@class="content"]/p/b'
+    },
+    "ublock_settings": {
+        "save_button": '//*[@id="userFiltersApply"]'
     },
 }
 
