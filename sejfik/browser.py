@@ -1,10 +1,12 @@
 """Contains functions needed to start webdriver.
 
 Contains:
+
     get_chromedriver(): Making sure there will be chromedriver binary to run.
     set_selenium_session(): Starts selenium session.
 
 Typical usage example:
+
     driver = set_selenium_session(chromedriver_headless=True)
 """
 
@@ -22,6 +24,7 @@ def get_chromedriver() -> str:
     """Downloads chromedriver binary and moves to /bin folder if not present.
 
     Returns:
+
         str: path to chromedriver binary file.
     """
 
@@ -47,6 +50,7 @@ def set_selenium_session(chromedriver_headless: bool = False) -> webdriver:
     """Starts selenium session with proper options.
 
     Returns:
+
         WebDriver: driver object.
     """
 

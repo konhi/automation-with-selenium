@@ -2,6 +2,7 @@
 
 Uses Python 3.8 and mainly Selenium library to control Chrome browser.
 Contains:
+
     login(): Logs in user to sejfik webpage.
 
     get_ptc_links(): Scrapes Pay To Click links.
@@ -22,9 +23,10 @@ Typical usage example:
 import logging
 from collections import deque
 from time import sleep
-from typing import Deque, List, Tuple
+from typing import Deque, List, Tuple, Any
 
 from selenium.webdriver.remote.webelement import WebElement  # type: ignore
+from selenium.common.exceptions import NoSuchElementException  # type: ignore
 
 from .browser import set_selenium_session  # type: ignore
 from .utils import get_href, urls, verify_and_get_href, xpaths  # type: ignore
@@ -50,7 +52,8 @@ class Sejfik:
         self.timer = timer
         self.show_logs = show_logs
         self.logs_path = logs_path
-        self.driver = set_selenium_session(chromedriver_headless=chromedriver_headless)
+        self.driver = set_selenium_session(
+            chromedriver_headless=chromedriver_headless)
 
         if show_logs:
             logging.basicConfig(
@@ -92,7 +95,8 @@ class Sejfik:
             self.password
         )
 
-        self.driver.find_element_by_xpath(xpaths["login"]["login_button"]).click()
+        self.driver.find_element_by_xpath(
+            xpaths["login"]["login_button"]).click()
 
         logging.debug("Logged in.")
 
@@ -100,7 +104,8 @@ class Sejfik:
         """Get pay to click links.
 
         Returns:
-            Deque[str]: raw hrefs
+
+            Deque: raw hrefs
         """
 
         isscrapped = False
@@ -112,7 +117,8 @@ class Sejfik:
             logging.info("Loaded next pay to click page.")
 
             current_anchors: Tuple[List[WebElement], ...] = (
-                self.driver.find_elements_by_xpath(xpaths["ptc"]["anchor_alt"]),
+                self.driver.find_elements_by_xpath(
+                    xpaths["ptc"]["anchor_alt"]),
                 self.driver.find_elements_by_xpath(xpaths["ptc"]["anchor"]),
             )
 
@@ -130,39 +136,49 @@ class Sejfik:
 
         return links
 
-    def get_inbox_links(self) -> Deque[str]:
-        """
-        Scrapes newest inbox links.
+    def get_inbox_links(self) -> Any:
+        """Scrapes newest inbox links.
 
-        :returns: Deque of links.
+        Returns:
+
+            Deque: inbox links if mail is present.
+
+            None: if mail not present.
         """
 
         self.driver.get(urls["inbox"])
         logging.info("Loaded inbox page.")
 
-        mail_link = get_href(
-            self.driver.find_element_by_xpath(xpaths["inbox"]["anchor"])
-        )
+        try:
+            mail_link = get_href(
+                self.driver.find_element_by_xpath(xpaths["inbox"]["anchor"])
+            )
 
-        self.driver.get(mail_link)
-        logging.info("Loaded mail.")
+            self.driver.get(mail_link)
+            logging.info("Loaded mail.")
 
-        logging.info("Scrapped mail links.")
+            logging.info("Scrapped mail links.")
 
-        return deque(
-            [
-                get_href(x)
-                for x in self.driver.find_elements_by_partial_link_text(
-                    "http://sejfik.com/scripts/runner.php?EA="
-                )
-            ]
-        )
+            return deque(
+                [
+                    get_href(x)
+                    for x in self.driver.find_elements_by_partial_link_text(
+                        "http://sejfik.com/scripts/runner.php?EA="
+                    )
+                ]
+            )
+
+        except NoSuchElementException:
+            logging.debug('Mail not found.')
+
+            return None
 
     def open_links(self, links: Deque[str]) -> None:
         """Open links.
 
         Args:
-            links (Deque[str])
+
+            links (Deque): list of links.
         """
 
         for link in links:
@@ -175,6 +191,7 @@ class Sejfik:
         """Closes browser.
 
         Args:
+
             timer (int): time to wait before closing browser.
         """
 
