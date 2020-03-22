@@ -69,9 +69,9 @@ def set_selenium_session(chromedriver_headless: bool = False) -> webdriver:
         for arg in driver_settings_headless:
             chrome_options.add_argument(arg)
 
-        driver = webdriver.Chrome(get_chromedriver(), options=chrome_options)
+    driver = webdriver.Chrome(get_chromedriver(), options=chrome_options)
 
-    else:
+    if not chromedriver_headless:
         driver.get(urls['ublock_settings'])
 
         # Using sleep to fix some javascript input's issues.
@@ -82,8 +82,7 @@ def set_selenium_session(chromedriver_headless: bool = False) -> webdriver:
         input_line.send_keys('##iframe')
         sleep(2)
 
-        driver.find_element_by_xpath(xpaths['ublock_settings']['save_button']).click()
-
-        driver = webdriver.Chrome(get_chromedriver(), options=chrome_options)
+        driver.find_element_by_xpath(
+            xpaths['ublock_settings']['save_button']).click()
 
     return driver
