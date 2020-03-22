@@ -19,7 +19,7 @@ Contains:
     attribute from element.
 
     Typical usage examples:
-    self.driver.get(urls['login'])
+    >>> self.driver.get(urls['login'])
 """
 
 

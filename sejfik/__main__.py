@@ -15,8 +15,8 @@ Contains:
 
 Typical usage example:
 
-    bot = Sejfik('username', 'password', chromedriver_headless=True)
-    ptc_links = bot.get_ptc_links()
+    >>> bot = Sejfik('username', 'password', chromedriver_headless=True)
+    >>> ptc_links = bot.get_ptc_links()
 """
 
 

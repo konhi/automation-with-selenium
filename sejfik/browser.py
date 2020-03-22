@@ -7,7 +7,7 @@ Contains:
 
 Typical usage example:
 
-    driver = set_selenium_session(chromedriver_headless=True)
+    >>> driver = set_selenium_session(chromedriver_headless=True)
 """
 
 from os.path import dirname, realpath
