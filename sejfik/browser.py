@@ -15,6 +15,7 @@ from platform import system
 from shutil import Error, move
 from time import sleep
 
+from selenium.webdriver.common.keys import Keys
 from selenium import webdriver  # type: ignore
 from webdriverdownloader import ChromeDriverDownloader  # type: ignore
 
@@ -79,7 +80,11 @@ def set_selenium_session(chromedriver_headless: bool = False) -> webdriver:
         input_line = driver.switch_to.active_element
         sleep(2)
 
-        input_line.send_keys('##iframe')
+        input_line.send_keys('##iframe'
+                             + Keys.ENTER
+                             + '*.css'
+                             + Keys.ENTER
+                             + '*.ico')
         sleep(2)
 
         driver.find_element_by_xpath(
