@@ -26,25 +26,24 @@ def get_chromedriver() -> str:
     """
 
     current_path = dirname(realpath(__file__))
-    binaries_path = '{}/../bin/'.format(current_path)
+    binaries_path = "{}/../bin/".format(current_path)
 
     cdd = ChromeDriverDownloader()
     sym_path: str = cdd.download_and_install()[1]
 
     try:
-        move(sym_path, '{}/../bin'.format(current_path))
+        move(sym_path, "{}/../bin".format(current_path))
 
     except Error:
         pass
 
-    if system() == 'Windows':
-        return '{}/chromedriver.exe'.format(binaries_path)
+    if system() == "Windows":
+        return "{}/chromedriver.exe".format(binaries_path)
 
-    return '{}/chromedriver'.format(binaries_path)
+    return "{}/chromedriver".format(binaries_path)
 
 
-def set_selenium_session(
-        chromedriver_headless: bool = False) -> webdriver:
+def set_selenium_session(chromedriver_headless: bool = False) -> webdriver:
     """Starts selenium session with proper options.
 
     Returns:
@@ -52,7 +51,7 @@ def set_selenium_session(
     """
 
     chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_experimental_option('prefs', prefs)
+    chrome_options.add_experimental_option("prefs", prefs)
 
     for arg in driver_settings:
         chrome_options.add_argument(arg)
