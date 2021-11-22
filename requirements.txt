@@ -1,0 +1,6 @@
+selenium
+webdriverdownloader
+beautifulsoup4
+requests
+tqdm
+discord.py
